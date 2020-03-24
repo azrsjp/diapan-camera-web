@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: sans-serif;
+  font-size: 95%;
+  text-align: center;
+  overflow: hidden;
+}
+
+#container {
+  position: relative;
+  height: 100%;
+}
+
+#video {
+  background-color: #000;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
