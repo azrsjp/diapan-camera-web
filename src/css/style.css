@@ -21,7 +21,10 @@ body {
 }
 
 #video {
+  width: 0px;
+  height: 0px;
   background-color: #000;
   object-fit: cover;
   object-position: 50% 50%;
+  position: absolute;
 }
