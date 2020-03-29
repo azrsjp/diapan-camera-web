@@ -1,4 +1,3 @@
-import { Constants } from './constants';
 import { Utility } from './utility';
 import { VideoLayer } from './video-layer';
 import { Capturer } from './capturer';
@@ -11,6 +10,17 @@ const shutterButton = <HTMLButtonElement>document.getElementById('shutter');
 const capturer = new Capturer();
 const videoLayer = new VideoLayer(video);
 const diapanLayer = new DiapanLayer(diapanCanvas);
+
+window.addEventListener('orientationchange', () => {
+  videoLayer
+    .requestUserMedia(Utility.getExpectedPhotoHeight(), Utility.getExpectedPhotoWidth())
+    .then(() => {
+      adjustViews();
+    })
+    .catch((err) => {
+      console.log('cant use camera', err);
+    });
+});
 
 shutterButton.addEventListener('click', () => {
   videoLayer.videoToCanvas(capturer.getCanvas());
@@ -33,8 +43,8 @@ const adjustViews = () => {
   ];
   const [windowWidth, windowHeight] = Utility.getWindowSize();
   const [videoWidth, videoHeight] = Utility.aspectFit(
-    Constants.kExpectedPhotoWidth,
-    Constants.kExpectedPhotoHeight,
+    Utility.getExpectedPhotoWidth(),
+    Utility.getExpectedPhotoHeight(),
     windowWidth,
     windowHeight
   );
@@ -77,7 +87,10 @@ const update = () => {
 };
 
 window.onload = () => {
-  Promise.all([videoLayer.requestUserMedia(), diapanLayer.loadModels()])
+  Promise.all([
+    videoLayer.requestUserMedia(Utility.getExpectedPhotoHeight(), Utility.getExpectedPhotoWidth()),
+    diapanLayer.loadModels(),
+  ])
     .then(() => {
       console.log('camera initialized');
       adjustViews();
