@@ -6,6 +6,8 @@ import { DiapanLayer } from 'diapan-layer';
 const video = <HTMLVideoElement>document.getElementById('video');
 const diapanCanvas = <HTMLCanvasElement>document.getElementById('diapan');
 const shutterButton = <HTMLButtonElement>document.getElementById('shutter');
+const whiteButton = <HTMLButtonElement>document.getElementById('white');
+const blackButton = <HTMLButtonElement>document.getElementById('black');
 
 const capturer = new Capturer();
 const videoLayer = new VideoLayer(video);
@@ -34,6 +36,14 @@ shutterButton.addEventListener('click', () => {
       anchor.target = '_blank';
       anchor.click();
     });
+});
+
+whiteButton.addEventListener('click', () => {
+  diapanLayer.addWhiteDiapan();
+});
+
+blackButton.addEventListener('click', () => {
+  diapanLayer.addBlackDiapan();
 });
 
 const adjustViews = () => {
