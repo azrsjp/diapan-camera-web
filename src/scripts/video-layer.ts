@@ -1,15 +1,4 @@
-import { Constants } from './constants';
 import { Utility } from './utility';
-
-const kMedias = {
-  locate: false,
-  audio: false,
-  video: {
-    width: { ideal: Constants.kExpectedPhotoHeight },
-    height: { ideal: Constants.kExpectedPhotoWidth },
-    facingMode: 'environment',
-  },
-};
 
 export class VideoLayer {
   private video: HTMLVideoElement = null;
@@ -61,8 +50,18 @@ export class VideoLayer {
     }
   };
 
-  requestUserMedia = () => {
-    return navigator.mediaDevices.getUserMedia(kMedias).then((stream) => {
+  requestUserMedia = (width: number, height: number) => {
+    const medias = {
+      locate: false,
+      audio: false,
+      video: {
+        width: { ideal: width },
+        height: { ideal: height },
+        facingMode: 'environment',
+      },
+    };
+
+    return navigator.mediaDevices.getUserMedia(medias).then((stream) => {
       return new Promise((resolve, reject) => {
         this.video.srcObject = stream;
         this.video.onloadedmetadata = () => {
