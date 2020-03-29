@@ -28,3 +28,21 @@ body {
   object-position: 50% 50%;
   position: absolute;
 }
+#shutter {
+  left: auto;
+  right: auto;
+  bottom: 16px;
+  padding: 0;
+  margin-left: -40px;
+  border: none;
+  background: transparent;
+  position: absolute;
+  outline: 0;
+  z-index: 1;
+}
+
+#shutter img {
+  display: block;
+  width: 80px;
+  height: 80px;
+}
