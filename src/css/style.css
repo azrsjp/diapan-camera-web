@@ -13,6 +13,7 @@ body {
   font-size: 95%;
   text-align: center;
   overflow: hidden;
+  background-color: #000;
 }
 
 #container {
@@ -28,6 +29,13 @@ body {
   object-position: 50% 50%;
   position: absolute;
 }
+
+#diapan {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+}
+
 #shutter {
   left: auto;
   right: auto;
