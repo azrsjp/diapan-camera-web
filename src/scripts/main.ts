@@ -1,9 +1,15 @@
 import { Constants } from './constants';
 import { Utility } from './utility';
+import { VideoLayer } from './video-layer';
 
 const video = <HTMLVideoElement>document.getElementById('video');
+const videoLayer = new VideoLayer(video);
 
 const adjustViews = () => {
+  const [trueVideoWidth, trueVideoHegiht] = [
+    videoLayer.getVideoWitdh(),
+    videoLayer.getVideoHeight(),
+  ];
   const [windowWidth, windowHeight] = Utility.getWindowSize();
   const [videoWidth, videoHeight] = Utility.aspectFit(
     Constants.kExpectedPhotoWidth,
@@ -19,19 +25,8 @@ const adjustViews = () => {
 };
 
 window.onload = () => {
-  navigator.mediaDevices
-    .getUserMedia(Constants.kMedias)
-    .then((stream) => {
-      return new Promise((resolve, reject) => {
-        video.srcObject = stream;
-        video.onloadedmetadata = () => {
-          resolve();
-        };
-        video.onerror = (error) => {
-          reject(error);
-        };
-      });
-    })
+  videoLayer
+    .requestUserMedia()
     .then(() => {
       console.log('camera initialized');
       adjustViews();
