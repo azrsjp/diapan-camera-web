@@ -4,8 +4,22 @@ import { VideoLayer } from './video-layer';
 import { Capturer } from './capturer';
 
 const video = <HTMLVideoElement>document.getElementById('video');
+const shutterButton = <HTMLButtonElement>document.getElementById('shutter');
+
 const capturer = new Capturer();
 const videoLayer = new VideoLayer(video);
+
+shutterButton.addEventListener('click', () => {
+  videoLayer.videoToCanvas(capturer.getCanvas());
+
+  capturer.saveAsImage().then((image: HTMLImageElement) => {
+    const anchor = document.createElement('a');
+    anchor.href = image.src;
+    anchor.download = 'image.png';
+    anchor.target = '_blank';
+    anchor.click();
+  });
+});
 
 const adjustViews = () => {
   const [trueVideoWidth, trueVideoHegiht] = [
