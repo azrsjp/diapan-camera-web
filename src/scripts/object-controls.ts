@@ -143,7 +143,7 @@ export class ObjectControls {
         this.rotationState = GestureState.UnderThrethold;
         this.startTurn(event);
         break;
-      case 2:
+      default:
         this.gesture = Gesture.ScalePanRotate;
         this.startScaling(event);
         this.startPan(event);
@@ -174,6 +174,7 @@ export class ObjectControls {
     const p1 = this.getNormalizedPoint(event, 1);
     const dx = p0.x - p1.x;
     const dy = p0.y - p1.y;
+    this.scaleLengthOrigin = this.activeObject.scale.length();
     this.touchScalingDistanceEnd = this.touchScalingDistanceStart = Math.sqrt(dx * dx + dy * dy);
   };
 
