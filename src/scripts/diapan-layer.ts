@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader';
+import { ObjectControls } from 'object-controls';
 
 const kWhiteDiapanPath = './assets/models/だいあぱんver.1.01.pmx';
 const kBlackDiapanPath = './assets/models/ブラックだいあぱんver.1.01.pmx';
@@ -13,6 +14,8 @@ export class DiapanLayer {
 
   private whiteDiapanMesh: THREE.SkinnedMesh = null;
   private blackDiapanMesh: THREE.SkinnedMesh = null;
+
+  private objectControls: ObjectControls = null;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -32,16 +35,16 @@ export class DiapanLayer {
 
   addWhiteDiapan = () => {
     if (this.whiteDiapanMesh != null) {
-      this.whiteDiapanMesh.position.set(0, -5, 0);
-      this.whiteDiapanMesh.rotation.set(0, 0, 0);
+      this.objectControls.register(this.whiteDiapanMesh);
+      this.whiteDiapanMesh.geometry.center();
       this.scene.add(this.whiteDiapanMesh);
     }
   };
 
   addBlackDiapan = () => {
     if (this.blackDiapanMesh != null) {
-      this.blackDiapanMesh.position.set(0, -5, 0);
-      this.blackDiapanMesh.rotation.set(0, 0, 0);
+      this.objectControls.register(this.blackDiapanMesh);
+      this.blackDiapanMesh.geometry.center();
       this.scene.add(this.blackDiapanMesh);
     }
   };
@@ -62,6 +65,7 @@ export class DiapanLayer {
       -height * 0.5
     );
     this.camera.position.set(0, 0, 100);
+    this.objectControls.setup(this.canvas, this.scene, this.camera);
   }
 
   update = () => {
@@ -97,6 +101,7 @@ export class DiapanLayer {
       alpha: true,
       preserveDrawingBuffer: true,
     });
+    this.objectControls = new ObjectControls();
     this.adjustLayer();
   };
 
