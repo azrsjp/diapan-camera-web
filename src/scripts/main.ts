@@ -13,7 +13,7 @@ const capturer = new Capturer();
 const videoLayer = new VideoLayer(video);
 const diapanLayer = new DiapanLayer(diapanCanvas);
 
-window.addEventListener('orientationchange', () => {
+const adjust = () => {
   videoLayer
     .requestUserMedia(Utility.getExpectedPhotoHeight(), Utility.getExpectedPhotoWidth())
     .then(() => {
@@ -22,7 +22,12 @@ window.addEventListener('orientationchange', () => {
     .catch((err) => {
       console.log('cant use camera', err);
     });
-});
+};
+
+// window.addEventListener('orientationchange', );
+window.onorientationchange = window.onresize = () => {
+  adjust();
+};
 
 shutterButton.addEventListener('click', () => {
   videoLayer.videoToCanvas(capturer.getCanvas());
