@@ -44,20 +44,12 @@ export class DiapanLayer {
     ]);
   };
 
-  addWhiteDiapan = () => {
-    if (this.whiteDiapanMesh != null) {
-      this.objectControls.register(this.whiteDiapanMesh);
-      this.whiteDiapanMesh.geometry.center();
-      this.scene.add(this.whiteDiapanMesh);
-    }
+  toggleWhiteDiapan = () => {
+    this.toggleObject(this.whiteDiapanMesh);
   };
 
-  addBlackDiapan = () => {
-    if (this.blackDiapanMesh != null) {
-      this.objectControls.register(this.blackDiapanMesh);
-      this.blackDiapanMesh.geometry.center();
-      this.scene.add(this.blackDiapanMesh);
-    }
+  toggleBlackDiapan = () => {
+    this.toggleObject(this.blackDiapanMesh);
   };
 
   adjustLayer() {
@@ -173,5 +165,28 @@ export class DiapanLayer {
     const x = object.position.x * (currentViewWidth / prevViewWidth);
     const y = object.position.y * (currentViewHeight / prevViewHeight);
     object.position.set(x, y, 0);
+  };
+
+  private toggleObject = (object: THREE.SkinnedMesh) => {
+    if (object === null) {
+      return;
+    }
+    if (object.parent === this.scene) {
+      this.scene.remove(object);
+    } else {
+      this.objectControls.register(object);
+      this.resetObjectTransform(object);
+      this.scene.add(object);
+    }
+  };
+
+  private resetObjectTransform = (object: THREE.SkinnedMesh) => {
+    if (object === null) {
+      return;
+    }
+    object.geometry.center();
+    object.scale.set(1, 1, 1);
+    object.position.set(0, 0, 0);
+    object.rotation.set(0, 0, 0);
   };
 }
