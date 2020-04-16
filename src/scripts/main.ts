@@ -44,11 +44,11 @@ shutterButton.addEventListener('click', () => {
 });
 
 whiteButton.addEventListener('click', () => {
-  diapanLayer.addWhiteDiapan();
+  diapanLayer.toggleWhiteDiapan();
 });
 
 blackButton.addEventListener('click', () => {
-  diapanLayer.addBlackDiapan();
+  diapanLayer.toggleBlackDiapan();
 });
 
 const adjustViews = () => {
