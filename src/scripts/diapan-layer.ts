@@ -1,9 +1,12 @@
 import * as THREE from 'three';
 import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader';
 import { ObjectControls } from 'object-controls';
+import { Utility } from './utility';
 
 const kWhiteDiapanPath = './assets/models/だいあぱんver.1.01.pmx';
 const kBlackDiapanPath = './assets/models/ブラックだいあぱんver.1.01.pmx';
+
+const kShortSideLength = 25; // 実は適当な値
 
 export class DiapanLayer {
   private canvas: HTMLCanvasElement = null;
@@ -17,8 +20,16 @@ export class DiapanLayer {
 
   private objectControls: ObjectControls = null;
 
+  private prevViewWidth = 0;
+  private prevViewHeight = 0;
+
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
+    [this.prevViewWidth, this.prevViewHeight] = this.calcViewSize(
+      canvas.width,
+      canvas.height,
+      kShortSideLength
+    );
     this.setup();
   }
 
@@ -53,16 +64,32 @@ export class DiapanLayer {
     const canvasWidth = this.canvas.width;
     const canvasHeight = this.canvas.height;
 
-    const width = 25;
-    const height = width * (canvasHeight / canvasWidth);
+    const [currentViewWidth, currentViewHeight] = this.calcViewSize(
+      canvasWidth,
+      canvasHeight,
+      kShortSideLength
+    );
+
+    [this.whiteDiapanMesh, this.blackDiapanMesh].forEach((object) => {
+      this.relocation(
+        object,
+        currentViewWidth,
+        currentViewHeight,
+        this.prevViewWidth,
+        this.prevViewHeight
+      );
+    });
+
+    this.prevViewWidth = currentViewWidth;
+    this.prevViewHeight = currentViewWidth;
 
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setSize(canvasWidth, canvasHeight);
     this.camera = new THREE.OrthographicCamera(
-      -width * 0.5,
-      width * 0.5,
-      height * 0.5,
-      -height * 0.5
+      -currentViewWidth * 0.5,
+      currentViewWidth * 0.5,
+      currentViewHeight * 0.5,
+      -currentViewHeight * 0.5
     );
     this.camera.position.set(0, 0, 100);
     this.objectControls.setup(this.canvas, this.scene, this.camera);
@@ -125,5 +152,26 @@ export class DiapanLayer {
         }
       );
     });
+  };
+
+  private calcViewSize = (canvasWidth: number, canvasHeight: number, shortSideLength: number) => {
+    return Utility.isPortrait()
+      ? [shortSideLength, shortSideLength * (canvasHeight / canvasWidth)]
+      : [shortSideLength * (canvasWidth / canvasHeight), shortSideLength];
+  };
+
+  private relocation = (
+    object: THREE.SkinnedMesh,
+    currentViewWidth: number,
+    currentViewHeight: number,
+    prevViewWidth: number,
+    prevViewHeight: number
+  ) => {
+    if (object === null) {
+      return;
+    }
+    const x = object.position.x * (currentViewWidth / prevViewWidth);
+    const y = object.position.y * (currentViewHeight / prevViewHeight);
+    object.position.set(x, y, 0);
   };
 }
