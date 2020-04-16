@@ -3,8 +3,8 @@ import { MMDLoader } from 'three/examples/jsm/loaders/MMDLoader';
 import { ObjectControls } from 'object-controls';
 import { Utility } from './utility';
 
-const kWhiteDiapanPath = './assets/models/だいあぱんver.1.01.pmx';
-const kBlackDiapanPath = './assets/models/ブラックだいあぱんver.1.01.pmx';
+const kWhiteDiapanPath = './assets/models/wd.pmx'; // original name "だいあぱんver.1.01.pmx"
+const kBlackDiapanPath = './assets/models/bd.pmx'; // original name "ブラックだいあぱんver.1.01.pmx"
 
 const kShortSideLength = 25; // 実は適当な値
 
