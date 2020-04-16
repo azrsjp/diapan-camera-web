@@ -15,8 +15,8 @@ export class Capturer {
       this.canvas.toBlob((blob) => {
         this.clearCanvas();
 
-        var img = document.createElement('img');
-        var url = URL.createObjectURL(blob);
+        const img = document.createElement('img');
+        const url = URL.createObjectURL(blob);
         this.images.push({ img, url });
 
         img.onload = () => {
