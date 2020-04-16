@@ -78,8 +78,8 @@ export class DiapanLayer {
   renderToCanvas = (canvas: HTMLCanvasElement) => {
     return new Promise((resolve, reject) => {
       this.canvas.toBlob((blob) => {
-        var img = document.createElement('img');
-        var url = URL.createObjectURL(blob);
+        const img = document.createElement('img');
+        const url = URL.createObjectURL(blob);
         img.onload = () => {
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvas.width, canvas.height);
