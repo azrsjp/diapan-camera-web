@@ -5,7 +5,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const appTitle = 'だいあぱんカメラ';
-const appVersion = '0.1';
+const appVersion = '0.1.1';
 const basePath = __dirname + '/..';
 
 exports.basePath = basePath;
