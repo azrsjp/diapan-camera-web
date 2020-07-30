@@ -1,3 +1,5 @@
+import * as dayjs from 'dayjs';
+
 import { Utility } from './utility';
 import { VideoLayer } from './video-layer';
 import { Capturer } from './capturer';
@@ -37,7 +39,8 @@ shutterButton.addEventListener('click', () => {
     .then((image: HTMLImageElement) => {
       const anchor = document.createElement('a');
       anchor.href = image.src;
-      anchor.download = 'image.png';
+      const time = dayjs().format('YYYYMMDD-HHmmss');
+      anchor.download = `daipan-${time}.png`;
       anchor.target = '_blank';
       anchor.click();
     });
