@@ -40,7 +40,7 @@ shutterButton.addEventListener('click', () => {
       const anchor = document.createElement('a');
       anchor.href = image.src;
       const time = dayjs().format('YYYYMMDD-HHmmss');
-      anchor.download = `daipan-${time}.png`;
+      anchor.download = `diapan-${time}.png`;
       anchor.target = '_blank';
       anchor.click();
     });
