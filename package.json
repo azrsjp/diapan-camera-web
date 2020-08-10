@@ -36,5 +36,8 @@
     "webpack-dev-server": "^3.10.3",
     "webpack-merge": "^4.2.2",
     "write-file-webpack-plugin": "^4.5.1"
+  },
+  "dependencies": {
+    "dayjs": "^1.8.31"
   }
 }
